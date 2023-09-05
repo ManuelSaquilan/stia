@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<div class="card-body">
+  <h4  style="text-align: center;">CONSULTA DE ORDEN</h4>
+  <form class="card-body" method="POST">
+    {% csrf_token %}
+    <div class="label-input">
+      <label>Orden:</label>
+      <div class="input-group" style="width: 300px;">
+        <input type="text" placeholder="Numero de orden..." name="ordenempleado" maxlength="30" required="True"
+          class="form-control" />
+        <input type="submit" value="Buscar" class="btn btn-success" />
+      </div>
+    </div>
+    {% if orden %}
+    <table class="table table-primary">
+      <thead>
+        <tr>
+          <th scope="col">ORDEN</th>
+          <th scope="col">EMPLEADO</th>
+          <th scope="col">COMERCIO</th>
+          <th scope="col">IMPORTE</th>
+          <th scope="col">CUOTAS</th>
+          <th scope="col">FECHA</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for orden in orden %}
+        <tr>
+
+          <td>{{ orden.id }}</td>
+          <td>{{ orden.empleado }}</td>
+          <td>{{ orden.comercio }}</td>
+          <td>$ {{ orden.importe }}</td>
+          <td>{{ orden.cuotas }} de $ {{orden.valorcuota}}</td>
+          <td>{{ orden.fecha }}</td>
+          <td><a href="{% url 'ordenes:export_pdf' orden.id %}" class="btn btn-info">Imprime</a></td>
+        <tr>
+          {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+
+
+
+  </form>
+
+</div>
+
+
+{% endblock %}

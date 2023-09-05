@@ -1,0 +1,54 @@
+.backindex {
+  background-size: cover;
+  color:white;
+  text-align: center;
+  font-weight: bold;
+  text-shadow: rgb(0, 0, 0) 2px 2px 15px,rgb(0, 0, 0) 2px 2px 15px,
+      rgb(0, 0, 0) 2px 2px 15px;
+  
+}
+nav {
+    background-color: #99aeda;
+    
+  }
+
+.dropdown-item:hover , .nav-link:hover {
+    background-color: #8ba4e7 !important; 
+    color: rgb(37, 41, 59) !important;
+    transform: translateY(2px);
+    border-radius: 5px;
+    transition: 500ms;
+  }
+
+.label-input {
+  display: flex;
+  justify-content: center !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+
+.label-input p {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+#footer {
+  text-align: center;
+}
+
+.logonav img {
+  width: 50px;
+}
+
+.logomain{
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;  
+}
+
+.logomain img {
+  filter: drop-shadow(2px 2px 15px #000003);
+}

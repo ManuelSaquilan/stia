@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<div class="card-body">
+  <form class="card-body" method="POST">
+    {% csrf_token %}
+    <div class="label-input">
+      <p>
+        <label for="id_empleado">EMPLEADO:</label>
+
+        <input type="text" placeholder="Buscar..." list="buscar" name="buscarempleado" maxlength="30" required="True"
+          class="form-control" style="width:100px" />
+        <datalist id="buscar">
+          {% for empleado in empleados %}
+          <option value="{{ empleado.id }}">{{ empleado.nombre }} {{ empleado.legajo }} {{ empleado.dni }}</option>
+          {% endfor %}
+        </datalist>
+      </p>
+      <p>
+        <label for="id_comercio">COMERCIO:</label>
+        <input type="text" placeholder="Buscar..." list="buscar2" name="buscarcomercio" maxlength="30" required="True"
+          class="form-control" style="width:100px" />
+        <datalist id="buscar2">
+          {% for comercio in comercios %}
+          <option value="{{ comercio.id }}" class="p-3 mb-2 bg-info text-dark">{{ comercio.comercio }} {{comercio.titular }}</option>
+          {% endfor %}
+        </datalist>
+      </p>
+    </div>
+    <div class="label-input">
+      <input type="submit" value="Buscar" class="btn btn-success" style="height: 40px;" />
+    </div>
+    {% if empleado %}
+    <table class="table table-primary">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">NOMBRE</th>
+          <th scope="col">LEGAJO</th>
+          <th scope="col">DNI</th>
+          <th scope="col">LIMITE</th>
+          <th scope="col">DISPONIBLE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          {% for empleado in empleado %}
+          <td>{{ empleado.id }}</td>
+          <td>{{ empleado.nombre }}</td>
+          <td>{{ empleado.legajo }}</td>
+          <td>{{ empleado.dni }}</td>
+          <td>{{ limite }}</td>
+          <td>{{ margen }}</td>
+          {% endfor %}
+        <tr>
+      </tbody>
+    </table>
+    <table class="table table-primary">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">COMERCIO</th>
+          <th scope="col">TITULAR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          {% for comercio in comercio %}
+          <td>{{ comercio.id }}</td>
+          <td>{{ comercio.comercio }}</td>
+          <td>{{ comercio.titular }}</td>
+          {% endfor %}
+        <tr>
+      </tbody>
+    </table>
+    <div class="label-input">
+      {% for empleado in empleado%}
+      {% for comercio in comercio%}
+      <a href="{% url 'ordenes:create_orden'  empleado.id comercio.id margen %}" class="btn btn-success">Emitir Nueva
+        Orden
+        de Compra</a>
+      <br>
+      {% endfor %}
+      {% endfor %}
+      {% endif %}
+    </div>
+  </form>
+
+</div>
+
+
+{% endblock %}

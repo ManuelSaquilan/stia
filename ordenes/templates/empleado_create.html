@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+    <div class="card-header">
+        <h4  style="text-align: center;">AGREGA EMPLEADO</h4>
+    </div>
+    <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!--<div>{{form.as_p}}-->
+                <div class="label-input">
+                <p>
+                    <label for="id_nombre">Apellido y Nombre:</label>
+                    <input type="text" name="nombre" maxlength="30" required="True" id="id_nombre" value="{{ empleado.nombre }}"
+                    class="form-control" style="width: 400px;"/>
+                </p>
+                <p>
+                    <label for="id_legajo">Número de Legajo:</label>
+                    <input type="number" name="legajo" required="True" id="id_legajo" value="{{ empleado.legajo }}"
+                    class="form-control" style="width: 200px;"/>
+                </p>
+                <p>
+                    <label for="id_dni">Número de DNI:</label>
+                    <input type="number" name="dni" required="True" id="id_dni" value="{{ empleado.dni }}"
+                    class="form-control" style="width: 200px;"/>
+                </p>
+                </div>
+                <div class="label-input">
+                <input type="submit" value="{{ tipo }}" class="btn btn-success" />
+                </div>
+            </form>
+    </div>
+    <div class="card-footer text-muted">
+
+    </div>
+</div>
+{% endblock %}

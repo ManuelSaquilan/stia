@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="<div class="table-responsive">
+    <h4 style="text-align: center;">ORDENES</h4>
+    <div class="label-input">
+        <a href="{% url 'ordenes:preconsulta' %}" class="btn btn-info">Emitir Nueva Orden de Compra</a>
+    </div>
+    <table class="table table-primary">
+        <thead>
+            <tr>
+                <th scope="col">ORDEN</th>
+                <th scope="col">EMPLEADO</th>
+                <th scope="col">COMERCIO</th>
+                <th scope="col">IMPORTE</th>
+                <th scope="col">CUOTAS</th>
+                <th scope="col">FECHA</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        {% for orden in orden_list %}
+        <tbody>
+            <tr>
+                <td>{{orden.id}}</td>
+                <td>{{orden.empleado}}</td>
+                <td>{{orden.comercio}}</td>
+                <td>$ {{orden.importe}}</td>
+                <td>{{orden.cuotas}} de $ {{orden.valorcuota}}</td>
+                <td>{{orden.fecha}}</td>
+                <td><a href="{% url 'ordenes:export_pdf' orden.id %}" class="btn btn-info">Imprime</a></td>
+            <tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

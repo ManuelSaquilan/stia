@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+    {% endif %}
+    <div class="card-header">
+        <h4>Emitir Nueva Orden de Compra</h4>
+    </div>
+
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!--{{form.as_p}}-->
+            <div class="p-3 mb-2 bg-info text-dark">
+                <select   name="empleado" id="selectempleado">
+                  <option value="0">Seleccione Empleado</option>
+                  {% for empleado in empleados %}
+                    <option value="{{ empleado.id }}">{{ empleado.nombre }} {{ empleado.legajo }} {{ empleado.dni }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <p><label>Limite de Compra:</label></p>
+              {% for i in limite %}
+              <input type="text" value="{{ i.margen }}" readonly>
+              {% endfor %}
+              <p><label for="id_empleado">Margen Disponible:</label></p>
+              <p>{{ margendisponible }}</p>
+              <input type="ptext" name="margen" id="margen">
+          
+              <div class="p-3 mb-2 bg-info text-dark">
+                <select   name="comercio" id="comercio">
+                  <option value="0">Seleccione Comercio</option>
+                  {% for comercio in comercios %}
+                    <option value="{{ comercio.id }}">{{ comercio.comercio}} {{ comercio.titular }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <p>
+                <label>Importe:</label>
+                <input type="number" name="importe" min="1" max="{{ margen }}" required="True"
+                    placeholder="Importe de la operación" class="form-control" style="width:210px " />
+            </p>
+            <p>
+                <label>Cuotas:</label>
+                <input type="number" name="cuotas" min="1" max="18" required="True" placeholder="Cantidad de Cuotas"
+                    class="form-control" style="width:180px" />
+            </p>
+            <!--<p>
+                <label for="id_empleado">Empleado:</label>
+                <input type="text" name="empleado" maxlength="30" required="True" class="form-control"
+                    style="width:100px" value="{{ empleado }}" readonly hidden />
+            </p>
+            <table class="table table-primary">
+                <thead>
+                    <tr>
+                        <th scope="col">NOMBRE</th>
+                        <th scope="col">LEGAJO</th>
+                        <th scope="col">DNI</th>
+                        <th scope="col">DISPONIBLE</th>
+                    </tr>
+                </thead>
+                <tr>
+                    {% for empleado in empleados %}
+                    <td>{{ empleado.nombre }}</td>
+                    <td>{{ empleado.legajo }}</td>
+                    <td>{{ empleado.dni }}</td>
+                    <td>{{ margen }}</td>
+                    {% endfor %}
+                <tr>
+            </table>
+            <p>
+                <label for="id_comercio">Comercio:</label>
+                <input type="text" name="comercio" maxlength="30" required="True" class="form-control"
+                    style="width:100px" value="{{ comercio }}" readonly hidden />
+
+            <table class="table table-primary">
+                <thead>
+                    <tr>
+                        <th scope="col">COMERCIO</th>
+                        <th scope="col">TITULAR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {% for comercio in comercios %}
+                        <td>{{ comercio.comercio }}</td>
+                        <td>{{ comercio.titular }}</td>
+                        {% endfor %}
+                    <tr>
+                </tbody>
+            </table>
+            </p>
+            <p>
+                <label>Importe:</label>
+                <input type="number" name="importe" min="1" max="{{ margen }}" required="True"
+                    placeholder="Importe de la operación" class="form-control" style="width:210px " />
+            </p>
+            <p>
+                <label>Cuotas:</label>
+                <input type="number" name="cuotas" min="1" max="18" required="True" placeholder="Cantidad de Cuotas"
+                    class="form-control" style="width:180px" />
+            </p>
+            <input type="submit" value="Crea Orden" class="btn btn-success btnCrear" />-->
+        </form>
+    </div>
+</div>
+<script>
+    $(function() {
+      $(console.log("hola"));
+      $('#empleado').select2({
+        placeholder:"Seleccione Socio",
+        allowClear:true
+      });
+    });
+
+    $('#selectempleado').change(function(){
+      alert('Empleado a cambiado');
+      var ordenes_list = "{{listaordenes|safe}}";
+      console.log(ordenes_list);
+      
+    });
+</script>
+  
+{% endblock %}

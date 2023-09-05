@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+<div class="<div class="table-responsive">
+    <h4  style="text-align: center;">EMPLEADOS</h4>
+    <div class="label-input">
+        <a href="{% url 'ordenes:empleado_create' %}" class="btn btn-info">Agregar Nuevo Empleado</a>
+    </div>
+    
+    <table class="table table-primary">
+        <thead>
+            <tr>
+                <th scope="col"ID</th>
+                <th scope="col">NOMBRE</th>
+                <th scope="col">LEGAJO</th>
+                <th scope="col">DNI</th>
+                <th scope="col">ACTIVO</th>
+                <th></th>
+            </tr>
+        </thead>
+        {% for empleado in empleado_list %}
+        <tbody>
+            <tr>
+                {% if empleado.activo %}
+                <td scope="row">{{empleado.id}}</td>
+                <td>{{empleado.nombre}}</td>
+                <td>{{empleado.legajo}}</td>
+                <td>{{empleado.dni}}</td>
+                <td>Activo</td>
+                {% else %}
+                <td scope="row" class="text-secondary">{{empleado.id}}</td>
+                <td class="text-secondary">{{empleado.nombre}}</td>
+                <td class="text-secondary">{{empleado.legajo}}</td>
+                <td class="text-secondary">{{empleado.dni}}</td>
+                <td class="text-secondary">Inactivo</td>
+                {% endif %}
+                <td>                                
+                    |
+                    <a href="{% url 'ordenes:empleado_update' empleado.id %}" class="btn btn-success">Editar</a>
+                    |
+                </td>
+            <tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
+<!-- BUSCA EMPLEADO -->
+<div class="card-body">
+    <form class="card-body" method="POST">
+      {% csrf_token %}
+      <div class="label-input">
+        <p>
+          <label for="id_empleado">EMPLEADO:</label>
+  
+          <input type="text" placeholder="Buscar..." list="buscar" name="updateaempleado" maxlength="30" required="True"
+            class="form-control" style="width:100px" />
+          <datalist id="buscar">
+            {% for empleado in empleado_list %}
+            <option value="{{ empleado.id }}">{{ empleado.nombre }} {{ empleado.legajo }} {{ empleado.dni }}</option>
+            {% endfor %}
+          </datalist>
+        </p>
+      </div>
+      <div class="label-input">
+        <input type="submit" value="Buscar" class="btn btn-success" style="height: 40px;" />
+      </div>
+      {% if empleado %}
+      <table class="table table-primary">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">NOMBRE</th>
+            <th scope="col">LEGAJO</th>
+            <th scope="col">DNI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {% for empleado in empleado %}
+            <td>{{ empleado.id }}</td>
+            <td>{{ empleado.nombre }}</td>
+            <td>{{ empleado.legajo }}</td>
+            <td>{{ empleado.dni }}</td>
+            {% endfor %}
+          <tr>
+        </tbody>
+      </table>
+      {% endif %}
+    </form>
+  
+</div>
+
+{% endblock %}
